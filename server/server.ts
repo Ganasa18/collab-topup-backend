@@ -1,3 +1,4 @@
+import { sequelize } from "../storage";
 import { app } from "./app";
 // SERVER PORT SETTING
 const PORT = Number(process.env.PORT || 3001);
@@ -9,7 +10,25 @@ process.on("uncaughtException", (err: Error) => {
   process.exit(1);
 });
 
-// DATABASE CONNECTION
+// DATABASE CONNECTION INITIAL
+async function assertDatabaseConnection() {
+  sequelize
+    .authenticate()
+    .then(async () => {
+      console.log("Connection has been established successfully.");
+      // FORCE DB SYNC
+      // await sequelize.sync({ force: true });
+      // DB SYNC
+      await sequelize.sync();
+      console.log("successfully sync database");
+    })
+    .catch((err: Error) => {
+      console.error("Unable to connect to the database:", err);
+    });
+}
+
+// RUN DATABASE CONNECTION
+assertDatabaseConnection();
 
 //RUN SERVER
 const server = app.listen(PORT, "0.0.0.0", () => {
