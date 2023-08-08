@@ -1,5 +1,6 @@
+import { Request, Response, NextFunction } from "express";
 export const catchAsync = (fn: any) => {
-  return (req: any, res: any, next: any) => {
-    fn(req, res, next).catch((err: any) => next(err));
+  return (req: Request, res: Response, next: NextFunction) => {
+    fn(req, res, next).catch((err: Error) => next(err));
   };
 };
