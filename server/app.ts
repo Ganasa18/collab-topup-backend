@@ -3,6 +3,7 @@ import cors from "cors";
 import { json } from "body-parser";
 import { AppError } from "./middleware/";
 import { globalErrorHandler } from "./middleware/";
+const cookieParser = require("cookie-parser");
 
 // EXPRESS INITIAL
 const app = express();
@@ -21,6 +22,9 @@ app.use(
     extended: true,
   })
 );
+
+// COOKIE PARSER MIDDLEWARE
+app.use(cookieParser());
 
 // ROUTES
 const testRoutes = require("./routes/test_route");
