@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { json } from "body-parser";
-import { AppError } from "./middleware/app_error";
-import { globalErrorHandler } from "./middleware/global_error";
+import { AppError } from "./middleware/";
+import { globalErrorHandler } from "./middleware/";
 
 // EXPRESS INITIAL
 const app = express();
@@ -24,9 +24,11 @@ app.use(
 
 // ROUTES
 const testRoutes = require("./routes/test_route");
+const authRoutes = require("./routes/auth_route");
 
 // URL
 app.use("/api/v1/test-route", testRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 // HANDLER ROUTES NOT FOUND
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
