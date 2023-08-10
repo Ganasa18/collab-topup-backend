@@ -17,7 +17,7 @@ const validateLogin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-exports = {
+module.exports = {
   userLoginValidationRules,
   validateLogin,
 };
