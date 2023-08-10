@@ -1,6 +1,6 @@
 import express from "express";
 import { catchAsync } from "../middleware/";
-import { signUp } from "../controllers/app";
+import { confirmAccount, signUp } from "../controllers/app";
 const {
   userValidationRules,
   validateRegister,
@@ -8,10 +8,13 @@ const {
 
 const router = express.Router();
 router.post(
-  "/sign-up",
-  userValidationRules(),
-  validateRegister,
-  catchAsync(signUp)
+  "/sign-up", // route path atau url path
+  userValidationRules(), // validasi value masuk
+  validateRegister, // check value error or not ?
+  catchAsync(signUp) // controller sign up
 );
+
+// activate account
+router.get("/activate-account/:token", catchAsync(confirmAccount));
 
 module.exports = router;
