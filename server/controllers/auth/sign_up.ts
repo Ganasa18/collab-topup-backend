@@ -16,45 +16,39 @@ const registerUser = () => {
       is_active: false,
     };
 
-    await new Email(
-      data,
-      data.email,
-      "localhost:3001/api/auth/active-account",
-      "reset password"
-    )
-      .sendTicket()
-      .catch((err) => {
-        console.log(err);
+    //CHECK IF USER HAS REGISTERED & HASH PASSWORD
+    UserProvider.beforeCreate(async (User) => {
+      const checkUser = await UserProvider.findOne({
+        where: {
+          email: User.email,
+        },
       });
+      if (checkUser) {
+        return next(new AppError("User already exists", 400));
+      }
+      const salt = bcrypt.genSaltSync(10);
+      User.password = bcrypt.hashSync(User.password, salt);
+    });
 
-    // //CHECK IF USER HAS REGISTERED & HASH PASSWORD
-    // UserProvider.beforeCreate(async (User) => {
-    //   const checkUser = await UserProvider.findOne({
-    //     where: {
-    //       email: User.email,
-    //     },
-    //   });
-    //   if (checkUser) {
-    //     return next(new AppError("User already exists", 400));
-    //   }
-    //   const salt = bcrypt.genSaltSync(10);
-    //   User.password = bcrypt.hashSync(User.password, salt);
-    // });
+    // INSERT INTO DB
+    const auth = await UserProvider.create(data);
+    const token: string = await signToken(auth);
 
-    // // INSERT INTO DB
-    // const auth = await UserProvider.create(data);
+    // SENDER ACTIVATION EMAIL
+    const url = `http://localhost:3001/api/v1/auth/activate-account/${token}`;
+    await new Email(data, data.email, url).sendTicket().catch((err) => {
+      console.log(err);
+    });
 
-    // const token: string = await signToken(auth);
-    // // Set Header Session
-    // req.session = {
-    //   jwt: token,
-    // };
+    // Set Header Session
+    req.session = {
+      jwt: token,
+    };
 
     return res.status(200).json({
       message: "success",
-      // token: token,
-      // data: auth,
-      data: data,
+      token: token,
+      data: auth,
     });
   };
 };

@@ -1,6 +1,6 @@
 import express from "express";
 import { catchAsync } from "../middleware/";
-import { signUp } from "../controllers/app";
+import { confirmAccount, signUp } from "../controllers/app";
 const {
   userValidationRules,
   validateRegister,
@@ -13,5 +13,8 @@ router.post(
   validateRegister, // check value error or not ?
   catchAsync(signUp) // controller sign up
 );
+
+// activate account
+router.get("/activate-account/:token", catchAsync(confirmAccount));
 
 module.exports = router;
