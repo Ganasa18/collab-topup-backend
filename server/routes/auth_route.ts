@@ -1,10 +1,15 @@
 import express from "express";
 import { catchAsync } from "../middleware/";
-import { confirmAccount, signUp } from "../controllers/app";
+import { signUp, login, confirmAccount } from "../controllers/app";
 const {
   userValidationRules,
   validateRegister,
 } = require("../middleware/user/user_create_validate");
+
+const {
+  userLoginValidationRules,
+  validateLogin,
+} = require("../middleware/user/user_login_validate");
 
 const router = express.Router();
 router.post(
@@ -14,7 +19,15 @@ router.post(
   catchAsync(signUp) // controller sign up
 );
 
+router.post(
+  "/login",
+  userLoginValidationRules(),
+  validateLogin,
+  catchAsync(login)
+);
+
 // activate account
 router.get("/activate-account/:token", catchAsync(confirmAccount));
+
 
 module.exports = router;
