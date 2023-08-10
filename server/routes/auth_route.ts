@@ -8,10 +8,10 @@ const {
 
 const router = express.Router();
 router.post(
-  "/sign-up",
-  userValidationRules(),
-  validateRegister,
-  catchAsync(signUp)
+  "/sign-up", // route path atau url path
+  userValidationRules(), // validasi value masuk
+  validateRegister, // check value error or not ?
+  catchAsync(signUp) // controller sign up
 );
 
 module.exports = router;
