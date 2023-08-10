@@ -1,5 +1,5 @@
-import { UserAttribute } from "../interface/user_interface";
-import { Response, Request } from "express";
+import { UserAttribute } from "../../interface/user_interface";
+// import { Response, Request } from "express";
 const jwt = require("jsonwebtoken");
 
 // export const createSendToken = async (
