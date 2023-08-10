@@ -2,8 +2,8 @@
 module.exports = {
   development: {
     HOST: "localhost",
-    USER: "postgres",
-    PASSWORD: "admin",
+    USER: "masayoshi",
+    PASSWORD: "    ",
     DB: "topup_db",
     PORT: 5432,
     dialect: "postgres",
