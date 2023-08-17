@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 const bcrypt = require("bcryptjs");
 import UserProvider from "../../../storage/models/user/user_model";
 import { AppError } from "../../middleware";
-import { signToken } from "../../utils/sign_token";
+import { signToken } from "../../utils";
 
 const loginUser = () => {
   return async (req: Request, res: Response, next: NextFunction) => {

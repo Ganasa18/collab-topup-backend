@@ -16,6 +16,7 @@ class UserProvider
   declare is_active: boolean;
   declare remember_token: string;
   declare open_id: string;
+  declare role_user_id?: number | undefined;
 
   static modelDefiner() {
     UserProvider.init(
@@ -48,6 +49,14 @@ class UserProvider
         },
         remember_token: {
           type: DataTypes.TEXT,
+          allowNull: true,
+        },
+        profile: {
+          type: DataTypes.JSON,
+          allowNull: true,
+        },
+        role_user_id: {
+          type: DataTypes.INTEGER,
           allowNull: true,
         },
       },
