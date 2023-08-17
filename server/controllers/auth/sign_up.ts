@@ -4,7 +4,7 @@ import UserProvider, {
   UserInput,
 } from "../../../storage/models/user/user_model";
 import { AppError } from "../../middleware";
-import { Email, signToken } from "../../utils/";
+import { Email, sendJsonResponse, signToken } from "../../utils/";
 
 const registerUser = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -16,16 +16,18 @@ const registerUser = () => {
       is_active: false,
     };
 
+    const checkUser = await UserProvider.findOne({
+      where: {
+        email: data.email,
+      },
+    });
+
     //CHECK IF USER HAS REGISTERED & HASH PASSWORD
+    if (checkUser) {
+      return next(new AppError("User already exists", 400));
+    }
+
     UserProvider.beforeCreate(async (User) => {
-      const checkUser = await UserProvider.findOne({
-        where: {
-          email: User.email,
-        },
-      });
-      if (checkUser) {
-        return next(new AppError("User already exists", 400));
-      }
       const salt = bcrypt.genSaltSync(10);
       User.password = bcrypt.hashSync(User.password, salt);
     });
@@ -45,7 +47,7 @@ const registerUser = () => {
       jwt: token,
     };
 
-    return res.status(200).json({
+    return sendJsonResponse(res, 200, {
       message: "success",
       token: token,
       data: auth,

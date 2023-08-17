@@ -29,10 +29,12 @@ app.use(cookieParser());
 // ROUTES
 const testRoutes = require("./routes/test_route");
 const authRoutes = require("./routes/auth_route");
+const masterRoutes = require("./routes/master_route");
 
 // URL
 app.use("/api/v1/test-route", testRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/master", masterRoutes);
 
 // HANDLER ROUTES NOT FOUND
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
