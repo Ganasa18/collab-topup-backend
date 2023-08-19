@@ -1,11 +1,26 @@
 import express from "express";
-import { catchAsync } from "../middleware/";
-import { createMenu, createRole, getMenu } from "../controllers/app";
+import {
+  createMenu,
+  createRole,
+  createSubMenu,
+  geAllSubMenu,
+  getAllAccess,
+  getAllMenu,
+  getMenuUser,
+  getRole,
+  updateRole,
+} from "../controllers/app";
+import { catchAsync } from "../middleware";
 
 const {
   menuCreateValidationRules,
   validateCreateMenu,
 } = require("../middleware/menu/menu_create_validate");
+
+const {
+  subMenuCreateValidationRules,
+  validateCreateSubMenu,
+} = require("../middleware/menu/sub_menu_create_validate");
 
 const {
   roleCreateValidationRules,
@@ -21,7 +36,17 @@ router.post(
   validateCreateMenu,
   catchAsync(createMenu)
 );
-router.get("/menu", catchAsync(getMenu));
+
+router.post(
+  "/submenu",
+  subMenuCreateValidationRules(),
+  validateCreateSubMenu,
+  catchAsync(createSubMenu)
+);
+
+router.get("/menu", catchAsync(getMenuUser));
+router.get("/menu-master", catchAsync(getAllMenu));
+router.get("/submenu-master", catchAsync(geAllSubMenu));
 
 // ROLE USER MASTER
 router.post(
@@ -30,5 +55,15 @@ router.post(
   validateCreateRole,
   catchAsync(createRole)
 );
+router.get("/role", catchAsync(getRole));
+router.put(
+  "/role/:id",
+  roleCreateValidationRules(),
+  validateCreateRole,
+  catchAsync(updateRole)
+);
+
+// ACCESS MASTER
+router.get("/access-master", catchAsync(getAllAccess));
 
 module.exports = router;

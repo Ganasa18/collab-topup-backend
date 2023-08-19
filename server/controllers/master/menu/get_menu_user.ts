@@ -4,7 +4,7 @@ import { MenuRemapAttributes } from "../../../interface/menu_interface";
 import { sendJsonResponse } from "../../../utils";
 import { AppError } from "../../../middleware";
 
-const getMenuMaster = () => {
+const getMenuUserMaster = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
     let id = req.query.id;
     // const menus = await MenuProvider.sequelize?.query(
@@ -107,4 +107,4 @@ const getMenuMaster = () => {
   };
 };
 
-export { getMenuMaster };
+export { getMenuUserMaster };
