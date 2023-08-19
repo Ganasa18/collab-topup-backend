@@ -10,9 +10,7 @@ const addRoleMaster = () => {
     const data: RoleInput = {
       role_name: req.body.role_name,
     };
-
     const role = await RoleProvider.create(data);
-
     return sendJsonResponse(res, 200, { message: "success", data: role });
   };
 };

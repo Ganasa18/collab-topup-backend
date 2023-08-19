@@ -1,5 +1,5 @@
 import express from "express";
-import { catchAsync } from "../middleware/";
+import { catchAsync } from "../middleware";
 import { signUp, login, confirmAccount } from "../controllers/app";
 const {
   userValidationRules,
