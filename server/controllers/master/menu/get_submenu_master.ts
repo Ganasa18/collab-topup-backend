@@ -14,7 +14,7 @@ const getAllSubMenuMaster = () => {
     });
     MenuProvider.hasMany(SubMenuProvider, { foreignKey: "id" });
 
-    const { rows, count } = await SubMenuProvider.findAndCountAll({
+    let { rows, count } = await SubMenuProvider.findAndCountAll({
       limit: limit,
       offset: offset,
       order: [["id", "ASC"]],
@@ -25,6 +25,10 @@ const getAllSubMenuMaster = () => {
       },
     });
     const totalPage = Math.ceil(count / limit);
+
+    if (rows.length == 0) {
+      count = 0;
+    }
 
     const result = {
       message: "success",

@@ -17,7 +17,7 @@ const getAccessMaster = () => {
 
     // const rows = await MenuAccessProvider.findAll();
 
-    const { rows, count } = await MenuAccessProvider.findAndCountAll({
+    let { rows, count } = await MenuAccessProvider.findAndCountAll({
       limit: limit,
       offset: offset,
       order: [["id", "ASC"]],
@@ -36,6 +36,10 @@ const getAccessMaster = () => {
     });
 
     const totalPage = Math.ceil(count / limit);
+
+    if (rows.length == 0) {
+      count = 0;
+    }
 
     const result = {
       message: "sucess",

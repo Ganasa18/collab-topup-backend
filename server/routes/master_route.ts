@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  createAccessUser,
   createMenu,
   createRole,
   createSubMenu,
@@ -26,6 +27,11 @@ const {
   roleCreateValidationRules,
   validateCreateRole,
 } = require("../middleware/role/role_create_validate");
+
+const {
+  accessCreateValidationRules,
+  validateCreateAccess,
+} = require("../middleware/access/access_user_validate");
 
 const router = express.Router();
 
@@ -64,6 +70,12 @@ router.put(
 );
 
 // ACCESS MASTER
+router.post(
+  "/access-master",
+  accessCreateValidationRules(),
+  validateCreateAccess,
+  catchAsync(createAccessUser)
+);
 router.get("/access-master", catchAsync(getAllAccess));
 
 module.exports = router;

@@ -16,10 +16,10 @@ export interface MenuAccessAttributes {
   id: number;
   level_user_id: number;
   menu_id: number;
-  access: boolean;
-  add: boolean;
-  edit: boolean;
-  remove: boolean;
+  access?: boolean;
+  add?: boolean;
+  edit?: boolean;
+  remove?: boolean;
 }
 
 export interface MenuRemapAttributes {
