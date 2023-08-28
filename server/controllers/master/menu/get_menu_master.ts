@@ -8,12 +8,17 @@ const getAllMenuMaster = () => {
     const limit = parseInt(req.query.size as string, 10) || 10;
     const offset: number = (page - 1) * limit;
 
-    const { rows, count } = await MenuProvider.findAndCountAll({
+    let { rows, count } = await MenuProvider.findAndCountAll({
       limit: limit,
       offset: offset,
       order: [["id", "ASC"]],
     });
     const totalPage = Math.ceil(count / limit);
+
+    if (rows.length == 0) {
+      count = 0;
+    }
+
     const result = {
       message: "success",
       listData: rows,

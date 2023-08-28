@@ -11,6 +11,7 @@ import { getAllMenuMaster } from "./master/menu/get_menu_master";
 import { getAllSubMenuMaster } from "./master/menu/get_submenu_master";
 import { addSubMenuMaster } from "./master/menu/create_submenu";
 import { getAccessMaster } from "./master/access/get_access";
+import { createAccessUserMaster } from "./master/access/create_access";
 
 const testRoute = getTest();
 const signUp = registerUser();
@@ -28,6 +29,7 @@ const getRole = getRoleMaster();
 const updateRole = updateRoleMaster();
 
 const getAllAccess = getAccessMaster();
+const createAccessUser = createAccessUserMaster();
 
 export {
   testRoute,
@@ -43,4 +45,5 @@ export {
   getRole,
   updateRole,
   getAllAccess,
+  createAccessUser,
 };
