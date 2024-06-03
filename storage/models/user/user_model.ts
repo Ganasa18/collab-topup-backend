@@ -1,6 +1,6 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import { sequelize } from "../..";
-import { UserAttribute } from "../../../server/interface/user_interface";
+import { UserAttribute } from "../../../server/interface";
 
 export interface UserInput extends Optional<UserAttribute, "id"> {}
 export interface UserOutput extends Required<UserAttribute> {}
@@ -16,6 +16,7 @@ class UserProvider
   declare is_active: boolean;
   declare remember_token: string;
   declare open_id: string;
+  declare role_user_id?: number | undefined;
 
   static modelDefiner() {
     UserProvider.init(
@@ -48,6 +49,14 @@ class UserProvider
         },
         remember_token: {
           type: DataTypes.TEXT,
+          allowNull: true,
+        },
+        profile: {
+          type: DataTypes.JSON,
+          allowNull: true,
+        },
+        role_user_id: {
+          type: DataTypes.INTEGER,
           allowNull: true,
         },
       },

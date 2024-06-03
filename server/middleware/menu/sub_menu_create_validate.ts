@@ -1,0 +1,37 @@
+import { body, validationResult } from "express-validator";
+import { Request, Response, NextFunction } from "express";
+
+const subMenuCreateValidationRules = () => {
+  return [
+    body("menu_id").notEmpty().withMessage("Menu id is required"),
+    body("submenu_name").notEmpty().withMessage("Sub Menu Name is required"),
+    body("path_url").notEmpty().withMessage("Path url is required"),
+    body("path_url").notEmpty().withMessage("Path url is required"),
+    body("icon").notEmpty().withMessage("Icon is required"),
+  ];
+};
+
+const validateCreateSubMenu = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const errors = validationResult(req);
+  if (errors.isEmpty()) {
+    return next();
+  }
+  const extractedErrors: any = [];
+  errors
+    .array()
+    .map((err: any) => extractedErrors.push({ [err.path]: err.msg }));
+
+  return res.status(422).json({
+    message: "error",
+    errors: extractedErrors,
+  });
+};
+
+module.exports = {
+  subMenuCreateValidationRules,
+  validateCreateSubMenu,
+};

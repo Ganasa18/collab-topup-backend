@@ -1,5 +1,5 @@
 import express from "express";
-import { catchAsync } from "../middleware/";
+import { catchAsync } from "../middleware";
 import { testRoute } from "../controllers/app";
 const router = express.Router();
 
