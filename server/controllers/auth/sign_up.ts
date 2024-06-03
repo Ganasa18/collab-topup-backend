@@ -4,7 +4,7 @@ import UserProvider, {
   UserInput,
 } from "../../../storage/models/user/user_model";
 import { AppError } from "../../middleware";
-import { signToken } from "../../utils/sign_token";
+import { Email, signToken } from "../../utils/";
 
 const registerUser = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -32,8 +32,14 @@ const registerUser = () => {
 
     // INSERT INTO DB
     const auth = await UserProvider.create(data);
-
     const token: string = await signToken(auth);
+
+    // SENDER ACTIVATION EMAIL
+    const url = `http://localhost:3001/api/v1/auth/activate-account/${token}`;
+    await new Email(data, data.email, url).sendTicket().catch((err) => {
+      console.log(err);
+    });
+
     // Set Header Session
     req.session = {
       jwt: token,

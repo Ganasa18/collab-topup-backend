@@ -7,3 +7,8 @@ export interface UserAttribute {
   remember_token?: string;
   open_id?: string;
 }
+
+export interface UserPayload {
+  id: number;
+  email: string;
+}
