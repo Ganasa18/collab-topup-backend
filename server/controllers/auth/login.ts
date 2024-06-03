@@ -3,11 +3,12 @@ const bcrypt = require("bcryptjs");
 import UserProvider from "../../../storage/models/user/user_model";
 import { AppError } from "../../middleware";
 import { signToken } from "../../utils";
+import { RequestLoginUser } from "../../interface";
 
 const loginUser = () => {
   return async (req: Request, res: Response, next: NextFunction) => {
     // REQUEST BODY
-    const { email, password } = req.body;
+    const { email, password }: RequestLoginUser = req.body;
 
     // Check user with email
     const user = await UserProvider.findOne({
@@ -40,7 +41,7 @@ const loginUser = () => {
       jwt: token,
     };
 
-  // Comment test
+    // Comment test
 
     return res.status(200).json({
       message: "success",

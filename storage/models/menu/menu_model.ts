@@ -1,6 +1,6 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import { sequelize } from "../..";
-import { MenuAttributes } from "../../../server/interface/menu_interface";
+import { MenuAttributes } from "../../../server/interface";
 
 export interface MenuInput extends Optional<MenuAttributes, "id"> {}
 export interface MenuOutput extends Required<MenuAttributes> {}

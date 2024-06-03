@@ -1,6 +1,6 @@
 import { Model, DataTypes, Optional } from "sequelize";
 import { sequelize } from "../..";
-import { UserAttribute } from "../../../server/interface/user_interface";
+import { UserAttribute } from "../../../server/interface";
 
 export interface UserInput extends Optional<UserAttribute, "id"> {}
 export interface UserOutput extends Required<UserAttribute> {}
