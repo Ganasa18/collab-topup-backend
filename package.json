@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "clean": "rm -rf build && npx tsc",
-    "_comment": "npm run clean",
+    "build": "rm -rf build && npx tsc",
+    "prestart": "npm run build",
     "start": "node build/server/server.js",
     "dev": "ts-node-dev --poll server/server.ts"
   },
